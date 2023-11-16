@@ -1,9 +1,9 @@
 {
-  "name": "plugin-sample-vite-svelte",
+  "name": "siyuan-plugin-epub-reader",
   "author": "frostime",
-  "url": "https://github.com/siyuan-note/plugin-sample-vite-svelte",
+  "url": "https://github.com/zuoez02/siyuan-plugin-epub-reader",
   "version": "0.2.6",
-  "minAppVersion": "2.10.12",
+  "minAppVersion": "2.10.14",
   "backends": [
     "windows",
     "linux",
@@ -14,20 +14,17 @@
     "desktop-window"
   ],
   "displayName": {
-    "en_US": "Plugin sample with vite and svelte",
-    "zh_CN": "插件样例 vite + svelte 版"
+    "zh_CN": "EPUB阅读器"
   },
   "description": {
-    "en_US": "SiYuan plugin sample with vite and svelte",
-    "zh_CN": "使用 vite 和 svelte 开发的思源插件样例"
+    "zh_CN": "EPUB阅读器"
   },
   "readme": {
-    "en_US": "README.md",
     "zh_CN": "README_zh_CN.md"
   },
   "funding": {
     "custom": [
-      "https://afdian.net/a/frostime"
+      "https://afdian.net/a/zuoez02"
     ]
   },
   "keywords": [

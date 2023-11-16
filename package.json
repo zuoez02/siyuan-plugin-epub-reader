@@ -29,5 +29,10 @@
     "vite": "^4.3.7",
     "vite-plugin-static-copy": "^0.15.0",
     "vite-plugin-zip-pack": "^1.0.5"
+  },
+  "dependencies": {
+    "epubjs": "^0.3.93",
+    "jszip": "^3.10.1",
+    "lodash": "^4.17.21"
   }
 }
