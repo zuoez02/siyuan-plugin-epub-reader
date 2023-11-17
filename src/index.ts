@@ -1,80 +1,42 @@
 import {
+    ITab,
   Plugin,
   openTab,
 } from "siyuan";
+import Tab from './components/Tab.svelte';
 import "@/index.scss";
-import "jszip";
-import Epub, { Contents } from 'epubjs';
-import { debounce } from 'lodash';
+import JSZip from "jszip";
+import { addIcon } from "./utils/icon";
+import { setI18n } from "./utils/i18n";
 
 const TAB_TYPE = "epubReaderTab";
 
-const addScriptSync = (path, id) => {
-  if (document.getElementById(id)) {
-    return false;
-  }
-  const xhrObj = new XMLHttpRequest();
-  xhrObj.open("GET", path, false);
-  xhrObj.setRequestHeader(
-    "Accept",
-    "text/javascript, application/javascript, application/ecmascript, application/x-ecmascript, */*; q=0.01"
-  );
-  xhrObj.send("");
-  const scriptElement = document.createElement("script");
-  scriptElement.type = "text/javascript";
-  scriptElement.text = xhrObj.responseText;
-  scriptElement.id = id;
-  document.head.appendChild(scriptElement);
-};
-
 export default class EpubReaderPlugin extends Plugin {
 
+  urlMap = new Map();
+
   onload() {
+    setI18n(this.i18n);
+    addIcon();
+    const u = this.urlMap;
     this.addTab({
       type: TAB_TYPE,
       init() {
-        addScriptSync("/plugins/siyuan-plugin-epub-reader/zip.min.js", "zip");
-        addScriptSync("/plugins/siyuan-plugin-epub-reader/epub.js", "epub");
-        this.element.innerHTML = `
-            <div style="height: 100%; width: 100%">
-            <div id="viewer" style="height: 100%; width: 100%"></div>
-            </div>
-            `;
-        const viewer = this.element.querySelector("#viewer");
-        const book = Epub("/" + this.data.url);
-        const rendition = book.renderTo(viewer, {
-          width: "100%",
-          height: '100%',
-          flow: 'paginated',
+        window["JSZip"] = JSZip;
+        const tab = new Tab({
+            target: this.element,
+            props: {
+                url: this.data.url,
+            }
         });
-
-
-        // scroll
-        const goLeft = () => rendition.prev()
-        const goRight = () => rendition.next()
-
-        const onwheel = debounce(event => {
-          const { deltaX, deltaY } = event
-          if (Math.abs(deltaX) > Math.abs(deltaY)) {
-            if (deltaX > 0) goRight()
-            else if (deltaX < 0) goLeft()
-          } else {
-            if (deltaY > 0) rendition.next()
-            else if (deltaY < 0) rendition.prev()
-          }
-          event.preventDefault()
-        }, 100, true)
-        // wheel
-        rendition.on('rendered', () => {
-          const contents = rendition.getContents() as any;
-          contents.forEach((c: Contents) => {
-            c.document.removeEventListener('wheel', onwheel);
-            c.document.addEventListener('wheel', onwheel);
-          })
-        })
-
-        rendition.display().then(() => {
-
+        tab.$on('metadata', (e) => {
+            const metadata = e.detail.metadata;
+            const tab = u.get(this.data.url);
+            if (tab) {
+                tab.updateTitle(metadata.title);
+                u.delete(this.data.url);
+            }
+            // this.data.title = metadata.title && tab.updateTitle(metadata.title);
         })
       },
     });
@@ -84,7 +46,8 @@ export default class EpubReaderPlugin extends Plugin {
       if (detail.element?.dataset?.href?.endsWith(".epub")) {
         const menu = detail.menu;
         menu.addItem({
-          label: "Open in Epub Reader",
+          label: this.i18n.openInEpubReader,
+          icon: 'iconEpubReader',
           click: () => this.open(detail.element.dataset.href),
         });
       }
@@ -92,17 +55,20 @@ export default class EpubReaderPlugin extends Plugin {
   }
 
   open(url: string) {
-    openTab({
+    const t = openTab({
       app: this.app,
       custom: {
-        icon: "iconFace",
-        title: "Epub Reader",
+        icon: "iconEpubReader",
+        title: this.i18n.tabDefaultTitle,
         data: {
           url,
         },
         id: this.name + TAB_TYPE,
       },
       position: 'right',
+    });
+    (t as any).then((tab: ITab) => {
+        this.urlMap.set(url, tab);
     });
   }
 }

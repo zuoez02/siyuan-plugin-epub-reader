@@ -1,26 +1,57 @@
-#helloPanel {
-    border: 1px rgb(189, 119, 119) dashed;
+.epub-dock {
+    width: 300px;
+    background-color: var(--b3-theme-background);
+    border-right: 1px solid var(--b3-border-color);
 }
 
-.plugin-sample {
-    &__custom-tab {
-        background-color: var(--b3-theme-background);
-        height: 100%;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+.full-height {
+    height: 100%;
+}
+
+.toolbar-top {
+    border-bottom: 1px solid var(--b3-border-color);
+    text-align: center;
+    height: 50px;
+    line-height: 50px;
+
+    .toolbar-btn {
+        margin: 0 4px;
     }
 
-    &__custom-dock {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    .epub-title {
+        min-width: 200px;
+        display: inline-block;
+        font-weight: bold;
+        font-size: 16px;
     }
+}
 
-    &__time {
-        background: var(--b3-card-info-background);
-        border-radius: 4px;
-        padding: 2px 8px;
+.toolbar-bottom {
+    border-top: 1px solid var(--b3-border-color);
+}
+
+.epub-dock {
+    padding: 12px;
+    overflow: auto;
+}
+
+.epub-dock-item {
+    cursor: pointer;
+    margin-top: 8px;
+    margin-bottom: 8px;
+
+    &:hover {
+        font-weight: bold;
+    }
+}
+
+.current-section {
+    font-weight: bolder;
+}
+
+@for $i from 1 through 9 {
+
+    .dock-level-#{$i} {
+        margin-left: $i * 8px;
     }
 }
