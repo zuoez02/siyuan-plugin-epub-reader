@@ -102,6 +102,7 @@ export default class EpubReaderPlugin extends Plugin {
         },
         id: this.name + TAB_TYPE,
       },
+      position: 'right',
     });
   }
 }
