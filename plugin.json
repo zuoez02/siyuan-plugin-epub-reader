@@ -2,7 +2,7 @@
   "name": "siyuan-plugin-epub-reader",
   "author": "zuoez02",
   "url": "https://github.com/zuoez02/siyuan-plugin-epub-reader",
-  "version": "0.1.2",
+  "version": "0.3.0",
   "minAppVersion": "2.10.14",
   "backends": [
     "windows",

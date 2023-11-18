@@ -13,6 +13,31 @@
     text-align: center;
     height: 50px;
     line-height: 50px;
+    position: relative;
+
+    .left-corner-btns {
+        position: absolute;
+        left: 0;
+
+        .left-corner-btn  {
+            height: 20px;
+            width: 20px;
+            font-size: 20px;
+            display: inline-block;
+            margin: 6px 8px;
+            cursor: pointer;
+
+            &.selected, &:hover {
+                color: var(--b3-theme-primary);
+            }
+        }
+
+        svg {
+            height: 20px;
+            width: 20px;
+            font-size: 20px;
+        }
+    }
 
     .toolbar-btn {
         margin: 0 4px;
@@ -42,6 +67,13 @@
 
     &:hover {
         font-weight: bold;
+    }
+}
+
+.mark-list {
+    .mark {
+        margin-bottom: 12px;
+        cursor: pointer;
     }
 }
 

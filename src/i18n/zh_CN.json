@@ -4,5 +4,11 @@
     "prevSection": "前一章节",
     "prevPage": "前一页",
     "nextSection": "后一章节",
-    "nextPage": "后一页"
+    "nextPage": "后一页",
+    "smaller": "小",
+    "small": "更小",
+    "medium": "适中",
+    "large": "大",
+    "larger": "更大",
+    "fontSizeTitle": "字体大小配置"
 }
